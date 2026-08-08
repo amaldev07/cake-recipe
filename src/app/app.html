@@ -51,7 +51,7 @@
         @for (recipe of filteredRecipes(); track recipe.id) {
           <article class="recipe-card" tabindex="0" (click)="openRecipe(recipe)" (keydown.enter)="openRecipe(recipe)">
             <div class="cake-visual {{ recipe.theme }}">
-              <span>{{ recipe.icon }}</span>
+              <img [src]="recipe.image" [alt]="recipe.name + ' cake'" width="900" height="900" loading="lazy">
               <small>1 kg</small>
             </div>
             <div class="card-body">
@@ -86,7 +86,7 @@
     <article class="recipe-modal" role="dialog" aria-modal="true" [attr.aria-label]="recipe.name + ' recipe'" (click)="$event.stopPropagation()">
       <button class="close-button" type="button" aria-label="Close recipe" (click)="closeRecipe()">×</button>
       <div class="modal-hero {{ recipe.theme }}">
-        <span class="modal-icon">{{ recipe.icon }}</span>
+        <img class="modal-image" [src]="recipe.image" [alt]="recipe.name + ' cake'" width="900" height="900">
         <div>
           <span class="category">{{ recipe.category }} · Approximately 1 kg</span>
           <h2>{{ recipe.name }}</h2>
@@ -113,10 +113,16 @@
 
         <section>
           <p class="eyebrow">How to make it</p>
-          <h3>5 simple steps</h3>
+          <h3>8 timed steps</h3>
           <ol class="steps">
             @for (step of recipe.steps; track $index) {
-              <li><span>{{ $index + 1 }}</span><p>{{ step }}</p></li>
+              <li>
+                <span>{{ $index + 1 }}</span>
+                <div>
+                  <div class="step-heading"><strong>{{ step.title }}</strong><small>◷ {{ step.time }}</small></div>
+                  <p>{{ step.instruction }}</p>
+                </div>
+              </li>
             }
           </ol>
           <div class="baker-tip"><strong>Baker’s tip</strong><p>{{ recipe.tip }}</p></div>
