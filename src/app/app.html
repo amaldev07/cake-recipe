@@ -1,0 +1,127 @@
+<header class="site-header">
+  <a class="brand" href="#top" aria-label="Whisk and Bake home">
+    <span class="brand-mark">W</span>
+    <span>Whisk <em>&</em> Bake</span>
+  </a>
+  <a class="browse-link" href="#recipes">Browse recipes <span aria-hidden="true">↓</span></a>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Simple recipes · Delicious results</p>
+      <h1>Find your next<br><span>favourite cake.</span></h1>
+      <p class="hero-text">Easy 1 kg cake recipes with measured ingredients and clear, no-fuss steps.</p>
+
+      <label class="search-box">
+        <span aria-hidden="true">⌕</span>
+        <span class="sr-only">Search cake recipes</span>
+        <input type="search" placeholder="Search chocolate, mango, vanilla…" [value]="query()" (input)="updateQuery($event)">
+      </label>
+    </div>
+
+    <div class="hero-art" aria-label="Celebration cake illustration">
+      <div class="sparkle sparkle-one">✦</div>
+      <div class="sparkle sparkle-two">✦</div>
+      <div class="cake-top"><span>🍓</span><span>🍓</span><span>🍓</span></div>
+      <div class="cake-layer layer-one"></div>
+      <div class="cake-layer layer-two"></div>
+      <div class="cake-layer layer-three"></div>
+      <div class="cake-plate"></div>
+    </div>
+  </section>
+
+  <section class="recipes-section" id="recipes">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Our recipe box</p>
+        <h2>Pick a cake to bake</h2>
+      </div>
+      <p>{{ filteredRecipes().length }} recipes</p>
+    </div>
+
+    <div class="filters" aria-label="Filter recipes by category">
+      @for (item of categories; track item) {
+        <button type="button" [class.active]="category() === item" (click)="selectCategory(item)">{{ item }}</button>
+      }
+    </div>
+
+    @if (filteredRecipes().length) {
+      <div class="recipe-grid">
+        @for (recipe of filteredRecipes(); track recipe.id) {
+          <article class="recipe-card" tabindex="0" (click)="openRecipe(recipe)" (keydown.enter)="openRecipe(recipe)">
+            <div class="cake-visual {{ recipe.theme }}">
+              <span>{{ recipe.icon }}</span>
+              <small>1 kg</small>
+            </div>
+            <div class="card-body">
+              <span class="category">{{ recipe.category }}</span>
+              <h3>{{ recipe.name }}</h3>
+              <p>{{ recipe.description }}</p>
+              <div class="card-meta">
+                <span>◷ {{ recipe.prep }} prep</span>
+                <button type="button" aria-label="Open {{ recipe.name }} recipe">View recipe <span>→</span></button>
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+    } @else {
+      <div class="empty-state">
+        <span>🧁</span>
+        <h3>No cakes found</h3>
+        <p>Try another search or category.</p>
+      </div>
+    }
+  </section>
+</main>
+
+<footer>
+  <div class="brand footer-brand"><span class="brand-mark">W</span><span>Whisk <em>&</em> Bake</span></div>
+  <p>Made for home bakers, one delicious cake at a time.</p>
+</footer>
+
+@if (selectedRecipe(); as recipe) {
+  <div class="modal-backdrop" (click)="closeRecipe()">
+    <article class="recipe-modal" role="dialog" aria-modal="true" [attr.aria-label]="recipe.name + ' recipe'" (click)="$event.stopPropagation()">
+      <button class="close-button" type="button" aria-label="Close recipe" (click)="closeRecipe()">×</button>
+      <div class="modal-hero {{ recipe.theme }}">
+        <span class="modal-icon">{{ recipe.icon }}</span>
+        <div>
+          <span class="category">{{ recipe.category }} · Approximately 1 kg</span>
+          <h2>{{ recipe.name }}</h2>
+          <p>{{ recipe.description }}</p>
+        </div>
+      </div>
+
+      <div class="quick-facts">
+        <div><span>Preparation</span><strong>{{ recipe.prep }}</strong></div>
+        <div><span>Baking</span><strong>{{ recipe.bake }}</strong></div>
+        <div><span>Difficulty</span><strong>{{ recipe.difficulty }}</strong></div>
+      </div>
+
+      <div class="recipe-content">
+        <section>
+          <p class="eyebrow">What you need</p>
+          <h3>Ingredients</h3>
+          <ul class="ingredients">
+            @for (ingredient of recipe.ingredients; track ingredient.item) {
+              <li><strong>{{ ingredient.amount }}</strong><span>{{ ingredient.item }}</span></li>
+            }
+          </ul>
+        </section>
+
+        <section>
+          <p class="eyebrow">How to make it</p>
+          <h3>5 simple steps</h3>
+          <ol class="steps">
+            @for (step of recipe.steps; track $index) {
+              <li><span>{{ $index + 1 }}</span><p>{{ step }}</p></li>
+            }
+          </ol>
+          <div class="baker-tip"><strong>Baker’s tip</strong><p>{{ recipe.tip }}</p></div>
+        </section>
+      </div>
+    </article>
+  </div>
+}

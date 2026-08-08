@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+
+:root {
+  --ink: #2f201b;
+  --muted: #795f55;
+  --cream: #fff8f2;
+  --paper: #ffffff;
+  --peach: #f4a987;
+  --berry: #a54254;
+  --line: #eadbd2;
+  --shadow: 0 18px 45px rgba(83, 47, 34, 0.09);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+button, input { font: inherit; }
+button { cursor: pointer; }
+button:focus-visible, input:focus-visible { outline: 3px solid rgba(165, 66, 84, .28); outline-offset: 2px; }
