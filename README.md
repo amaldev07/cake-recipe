@@ -18,3 +18,7 @@ npm run build
 The GitHub Actions workflow deploys the production build to GitHub Pages whenever `main` is updated.
 
 > Recipe yields are approximate and can vary with decoration, moisture loss and tin size.
+## Live website
+
+[Open Whisk & Bake](https://amaldev07.github.io/cake-recipe/)
+
